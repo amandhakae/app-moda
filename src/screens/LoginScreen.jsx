@@ -8,6 +8,7 @@ export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
@@ -17,14 +18,21 @@ export default function LoginScreen({ navigation }) {
         setError(error.message);
       });
   };
+
   return (
     <View style={styles.container}>
       <Image
         style={styles.logo}
         source={require("../../assets/ChicCloset.png")}
       />
-      <TextInput placeholder="Email" value={email} onChangeText={setEmail} />
       <TextInput
+        style={styles.textInput}
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail}
+      />
+      <TextInput
+        style={styles.textInput}
         placeholder="Password"
         value={password}
         onChangeText={setPassword}

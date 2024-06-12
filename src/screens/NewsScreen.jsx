@@ -1,25 +1,57 @@
-import React, { useEffect, useState } from 'react'; 
-import { View, Text, FlatList } from 'react-native'; 
-import { styles } from "../config/styles";
-export default function NewsScreen() { 
-    const [news, setNews] = useState({}); 
-    useEffect(() => { 
-        fetch('https://api.mockaroo.com/api/80dc16d0?count=1000&key=72438780') 
-        .then(response => response.json()) 
-        .then(data => setNews(data.articles)) 
-        .catch(error => console.error(error)); 
-    }, []); 
-    return ( 
-    <View> 
-        <FlatList data={news} 
-        keyExtractor={(item) => item.url} 
-        renderItem={({ item }) => ( 
-        <View> 
-            <Text>{item.title}</Text> 
-            <Text>{item.description}</Text> 
-            </View> 
-            )} 
-            /> 
-            </View> 
-            ); 
-        }
+import React, { useState, useEffect } from 'react';
+import { View, Text, FlatList, StyleSheet, Image } from 'react-native';
+
+const MakeupList = () => {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    fetch('https://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline')
+      .then(response => response.json())
+      .then(data => setProducts(data))
+      .catch(error => console.error('Error:', error));
+  }, []);
+
+  const renderItem = ({ item }) => (
+    <View style={styles.item}>
+      <Image source={{ uri: item.image_link }} style={styles.image} />
+      <Text style={styles.title}>{item.name}</Text>
+      <Text>{item.brand}</Text>
+      <Text>${item.price}</Text>
+    </View>
+  );
+
+  return (
+    <View style={styles.container}>
+      <FlatList
+        data={products}
+        keyExtractor={item => item.id.toString()}
+        renderItem={renderItem}
+      />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: 20,
+  },
+  item: {
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  image: {
+    width: 50,
+    height: 50,
+    marginRight: 10,
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+});
+
+export default MakeupList;
