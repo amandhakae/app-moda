@@ -6,6 +6,7 @@ export default StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#764F7B", 
+
   },
   logo: {
     width: 200,
@@ -22,10 +23,7 @@ export default StyleSheet.create({
   button: { 
     marginTop: 12 
   },
-  logo: { width: 200, 
-    height: 200, 
-    marginBottom: 20 
-  },
+  
   textInput: {
     width: '80%',
     height: 40,
